@@ -1,0 +1,11 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: s3 bucket stack for Cloudformation task
+
+Resources:
+  Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: "cf-bucketoottt"
+
+# run the below command on your cli to create aws s3 bucket stack
+# aws cloudformation deploy --template-file <mys3bucket.yaml> --stack-name <laeticias3buckmat> --profile <temp> --<region us-east-1>      
