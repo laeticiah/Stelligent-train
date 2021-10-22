@@ -20,6 +20,6 @@ Resources:
         - !Sub '$[AWS::AccountId]-$[s3bucket]'
         - !Sub '$[AWS::Region]-$[s3bucket]'
 
-
+#using conditions and pseudo-parameters
 # run the below command on your cli to create aws s3 bucket stack
 # aws cloudformation deploy --template-file <mys3bucket.yaml> --stack-name <laeticias3buckmat> --profile <temp> --<region us-east-1>      
