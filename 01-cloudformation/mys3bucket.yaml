@@ -6,14 +6,20 @@ Parameters:
   s3bucket:
     Type: String
 
+Conditions:
+  Naming: !Equals 
+    - !Sub '$[AWS::Region]'
+    - us-east-1
+
 Resources:
   S3Bucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName:
-        Ref: s3bucket
-        
-     #BucketName: "cf-bucketoottty" 
+      BucketName: !If
+        - Naming
+        - !Sub '$[AWS::AccountId]-$[s3bucket]'
+        - !Sub '$[AWS::Region]-$[s3bucket]'
+
 
 # run the below command on your cli to create aws s3 bucket stack
 # aws cloudformation deploy --template-file <mys3bucket.yaml> --stack-name <laeticias3buckmat> --profile <temp> --<region us-east-1>      
