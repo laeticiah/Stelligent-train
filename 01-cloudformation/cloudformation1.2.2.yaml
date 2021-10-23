@@ -1,0 +1,38 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Template for IAM
+
+Parameters:
+  Username:
+    Type: String
+
+Resources:
+  MyPolicy:
+    Type: 'AWS::IAM::ManagedPolicy'
+    Properties:
+      ManagedPolicyName: ManagedS3ReadOnlyPolicy
+      Path: '/'
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action:
+              - 's3:Get*'
+              - 's3:List*'
+            Resource: '*'
+myUser:
+  Type: 'AWS::IAM::User'
+  Properties:
+    Username: !Ref Username
+    ManagedPolicyArns:
+      - !Ref 'MyPolicy'
+
+Outputs:
+  PolicyID:
+    Description: The ID of the IAM policy
+    Value: !Ref 'MyPolicy'
+    Export: 
+      Name: !Sub "${AWS::StackName}-Policy"
+
+#Command to update stack
+#aws cloudformation update-stack --stack-name cftaskstack --template-body file://cloudformation1.2.2.yaml --parameters file://parameter2.json --capabilities CAPABILTY_NAMED_IAM --profile temp --region us-east-1
+

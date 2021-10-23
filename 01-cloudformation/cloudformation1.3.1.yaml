@@ -1,0 +1,16 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: s3 bucket stack for Cloudformation task
+
+Parameters:
+  BucketName:
+    Type: String
+    Default: bucket
+
+Resources:
+  S3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub '${AWS::Region}-${AWS::AccountId}-${BucketName}'
+
+#Command to create bucket in all US regions
+#run create_multiple_s3.sh

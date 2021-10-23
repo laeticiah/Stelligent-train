@@ -1,0 +1,14 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Template for IAM
+
+Resources:
+  myUser:
+    Type: 'AWS::IAM::User'
+    Properties:
+      Username: developer2
+      ManagedPolicyArns:
+        - !ImportValue 'cftaskstack-Policy'
+
+#Command to create stack
+#aws cloudformation create-stack --stack-name cftaskstack2 --template-body file://cloudformation1.2.3.yaml --parameters file://parameter2.json --capabilities CAPABILTY_NAMED_IAM --profile temp --region us-east-1
+
