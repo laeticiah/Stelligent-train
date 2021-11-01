@@ -1,0 +1,18 @@
+[
+    {
+        "ParameterKey": "Username",
+        "ParameterValue": "laeticia.harper"
+    },
+    {
+        "ParameterKey": "AMI",
+        "ParameterValue": "ami-02e136e904f3da870"
+    },
+    {
+        "ParameterKey": "InstanceType",
+        "ParameterValue": "t2.micro"
+    },
+    {
+        "ParameterKey": "KeyFile",
+        "ParameterValue": "myec2kp"
+    }
+]
