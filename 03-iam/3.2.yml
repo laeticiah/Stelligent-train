@@ -1,0 +1,57 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+Resources:
+  S3Bucket1:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: stelligent-test-bucket-1
+
+  S3Bucket2:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: stelligent-test-bucket-2
+
+  RootRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS:
+                - !Sub 'arn:aws:iam::${AWS::AccountId}:user/laeticia.harper.labs'
+            Action:
+              - 'sts:AssumeRole'
+      Policies:
+        - PolicyName: S3ListAccess
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 's3:GetBucketLocation'
+                  - 's3:ListAllMyBuckets'
+                Resource: "*"
+        - PolicyName: S3FullforBuckets1
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 's3:*'
+                Resource: 
+                  - !Sub 'arn:aws:s3:::${S3Bucket1}'
+                  - !Sub 'arn:aws:s3:::${S3Bucket1}/*'
+        - PolicyName: S3FullforBuckets2
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 's3:List*'
+                  - 's3:Generate*'
+                Resource: 
+                  - !Sub 'arn:aws:s3:::${S3Bucket2}'
+                  - !Sub 'arn:aws:s3:::${S3Bucket2}/*'
+       

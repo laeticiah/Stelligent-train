@@ -1,0 +1,10 @@
+[
+    {
+        "ParameterKey": "CDIRBlock",
+        "ParameterValue": "10.0.0.0/16"
+    },
+    {
+        "ParameterKey": "Username",
+        "ParameterValue": "laeticia.harper"
+    }
+]
