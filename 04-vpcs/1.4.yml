@@ -1,0 +1,33 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Parameters:
+  AMI:
+    Type: String
+  InstanceType:
+    Type: String
+  KeyFile:
+    Type: String
+  Username:
+    Type: String
+
+Resources:
+  EC2Instance:
+    Type: "AWS::EC2::Instance"
+    Properties:
+      ImageId: !Ref AMI
+      InstanceType: !Ref InstanceType
+      KeyName: !Ref KeyFile
+      SubnetId: !ImportValue vpctask-mypubSubnet
+      Tags:
+        - Key: user
+          Value: !Ref Username
+        - Key: stelligent-u-lesson
+          Value: 4.1
+        - Key: stelligent-u-lab
+          Value: 4.1.1
+
+Outputs:
+  InstanceID:
+    Value: !Ref EC2Instance
+  PrivateIP:
+    Value: !GetAtt EC2Instance.PrivateIp

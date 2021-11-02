@@ -1,0 +1,48 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: S3 task using Cloudformation
+
+Parameters:
+  BucketName:
+    Type: String
+    Default: bucket
+
+Resources:
+  S3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: stelligent-u-laeticia.harper
+
+
+  MyPolicy:
+    Type: 'AWS::IAM::ManagedPolicy'
+    Properties:
+      Bucket: stelligent-u-laeticia.harper
+      ManagedPolicyName: ManagedS3MaintenancePolicy
+      Path: '/'
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action:
+              - 's3:*'
+            Resource: 'arn:aws:s3:::stelligent-u-laeticia.harper'
+      Principal:
+        AWS: arn:aws:iam::324320755747:laeticia.harper
+
+  ReadOnlyPolicy:
+    Type: 'AWS::IAM::ManagedPolicy'
+    Properties:
+      Bucket: stelligent-u-laeticia.harper
+      ManagedPolicyName: ManagedS3MaintenancePolicy
+      Path: '/'
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action:
+              - 's3: GetObject'
+            Resource: 'arn:aws:s3:::stelligent-u-laeticia.harper'
+      Principal:
+        AWS: '*'
+
+

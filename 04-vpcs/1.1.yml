@@ -1,0 +1,42 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Parameters:
+  CDIRBlock:
+    Type: String
+  Username:
+    Type: String
+
+Resources:
+  VPC:
+    Type: "AWS::EC2::VPC"
+    Properties:
+      CidrBlock: !Ref CDIRBlock
+      Tags:
+        - Key: user
+          Value: !Ref Username
+        - Key: stelligent-u-lesson
+          Value: 4.1
+        - Key: stelligent-u-lab
+          Value: 4.1.1
+
+  Subnet:
+    Type: "AWS::EC2::Subnet"
+    Properties:
+      VpcId:
+        Ref: VPC
+      CidrBlock: 10.0.0.0/24
+      Tags:
+        - Key: user
+          Value: !Ref Username
+        - Key: stelligent-u-lesson
+          Value: 4.1
+        - Key: stelligent-u-lab
+          Value: 4.1.1
+
+Outputs:
+  VPCID:
+    Description: The Instance ID
+    Value: !Ref VPC
+  SubnetID:
+    Description: The Instance ID
+    Value: !Ref Subnet
