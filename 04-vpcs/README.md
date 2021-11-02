@@ -37,3 +37,13 @@ aws cloudformation update-stack --stack-name vpctask-1 --template-body file://1.
 ---------------------------------------------------------------------------------------------------------
 *Update stack with template that adds NAT Gateway*
 aws cloudformation update-stack --stack-name vpctask-1 --template-body file://1.7.yml --parameters file://params2.json --profile temp --region us-east-1
+
+----------------------------------------------------------------------------------------------------------
+*Update stack with private subnet, EC2, route and SG*
+aws cloudformation update-stack --stack-name vpctask-1 --template-body file://1.8.yml --parameters file://params3.json --profile temp --region us-east-1
+
+-----------------------------------------------------------------------------------------------------------
+*Delete all stacks*
+aws cloudformation delete-stack --stack-name vpstask-1
+
+aws cloudformation delete-stack --stack-name vpctask
