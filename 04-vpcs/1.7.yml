@@ -11,57 +11,90 @@ Parameters:
     Type: String
 
 Resources:
-  EC2Instance:
-    Type: "AWS::EC2::Instance"
-    Properties:
-      ImageId: !Ref AMI
-      InstanceType: !Ref InstanceType
-      KeyName: !Ref KeyFile
-      SubnetId: !ImportValue vpctask-mypubSubnet
-      SecurityGroupIds:
-        - Ref: InstanceSecurityGroup
-
-  InstanceSecurityGroup:
-    Type: AWS::EC2::SecurityGroup
-    Properties:
-        GroupDescription: Allow ssh/ICMP
-        VPCID: !ImportValue vpctask-VPC
-        SecurityGroupIngress:
-        - IpProtocol: tcp
-          FromPort: 22
-          ToPort: 22
-          CidrIp: 10.0.0.0/24
-        - IpProtocol: icmp
-          FromPort: 8
-          ToPort: -1
-          CidrIp: 10.0.0.0/24
-  MyEIP:
+  MyprivEIP:
     Type: AWS::EC2::EIP
     Properties:
       Domain: vpc
-      InstanceId: !Ref EC2Instance
 
   NAT:
    Type: AWS::EC2::NatGateway
    Properties:
-      AllocationId: !ImportValue vpctask-1-AllocationId
+      AllocationId: !GetAtt 'MyprivEIP.AllocationId'
       SubnetId: !ImportValue vpctask-mypubSubnet
 
-  EIP:
-   DependsOn: AttachGateway
-   Type: AWS::EC2::EIP
-   Properties:
-      Domain: vpc
+  myPrivRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:  !ImportValue vpctask-VPC
+
+  PrivRoute:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId:
+        Ref: myPrivRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      NatGatewayId:
+        Ref: NAT
 
   NGWRoute:
    Type: AWS::EC2::Route
    Properties:
       RouteTableId:
-         Ref: myRouteTable
+         Ref: myPrivRouteTable
       DestinationCidrBlock: 0.0.0.0/0
       NatGatewayId:
          Ref: NAT
 
+  myprivSubnet:
+    Type: "AWS::EC2::Subnet"
+    Properties:
+      VpcId:  !ImportValue vpctask-VPC
+      CidrBlock: 10.0.100.0/24
+      Tags:
+        - Key: user
+          Value: !Ref Username
+        - Key: stelligent-u-lesson
+          Value: 4.1
+        - Key: stelligent-u-lab
+          Value: 4.1.7
+
+  myprivSubnetRouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId:
+        Ref: myprivSubnet
+      RouteTableId:
+        Ref: myPrivRouteTable
+
+  PrivEC2Instance:
+    Type: "AWS::EC2::Instance"
+    Properties:
+      ImageId: !Ref AMI
+      InstanceType: !Ref InstanceType
+      KeyName: !Ref KeyFile
+      SubnetId: !Ref myprivSubnet
+      SecurityGroupIds:
+        - Ref: privInstanceSecurityGroup
+
+  privInstanceSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+        GroupDescription: Allow ssh/ICMP
+        VpcId: !ImportValue vpctask-VPC
+        SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: icmp
+          FromPort: 8
+          ToPort: -1
+          CidrIp: 0.0.0.0/0
+
+
 Outputs:
   PublicIP:
-    Value: !GetAtt EC2Instance.PublicIp
+    Value: !Ref MyprivEIP
+    Export: 
+      Name: !Sub "${AWS::StackName}-PublicIP"
+
