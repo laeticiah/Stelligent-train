@@ -1,0 +1,17 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Using Launch Template in Cloudformation
+
+Resources:
+  Windows:
+    Type: AWS::EC2::Instance
+    Properties:
+      LaunchTemplate:
+        LaunchTemplateName: WindowsServer
+        Version: 1
+
+  Ubuntu:
+    Type: AWS::EC2::Instance
+    Properties:
+      LaunchTemplate:
+        LaunchTemplateName: UbuntuServer
+        Version: 1

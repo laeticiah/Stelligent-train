@@ -1,0 +1,37 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: EC2 task using Cloudformation
+
+Resources:
+  Ubuntu:
+    Type: AWS::EC2::Instance
+    Properties:
+      LaunchTemplate:
+        LaunchTemplateName: UbuntuServer
+        Version: 2
+      SecurityGroupIds:
+        - Ref: InstanceSecurityGroup
+      KeyName: myec2kp
+  
+  MyEIP:
+    Type: AWS::EC2::EIP
+    Properties:
+      Domain: vpc
+      InstanceId: !Ref Ubuntu
+
+  InstanceSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+        GroupDescription: Allow ICMP
+        SecurityGroupIngress:
+          - IpProtocol: icmp
+            FromPort: 8
+            ToPort: -1
+            CidrIp: 0.0.0.0/0
+          - IpProtocol: tcp
+            FromPort: 22
+            ToPort: 22
+            CidrIp: 172.113.96.250/32
+
+Outputs:
+  PublicIP:
+    Value: !GetAtt Ubuntu.PublicIp

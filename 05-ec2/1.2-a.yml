@@ -1,0 +1,35 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Creating Launch Template in Cloudformation
+
+Resources:
+  WindowsServer:
+    Type: AWS::EC2::LaunchTemplate
+    Properties:
+      LaunchTemplateName: MyWindowsServer
+      LaunchTemplateData:
+        ImageId: ami-0416f96ae3d1a3f29
+        InstanceType: t2.micro
+        BlockDeviceMappings:
+          - Ebs:
+              VolumeSize: 30
+              VolumeType: gp2
+              DeleteOnTermination: true
+              Encrypted: true
+            DeviceName: /dev/xvdcz
+        KeyName: myec2kp
+
+  UbuntuServer:
+    Type: AWS::EC2::LaunchTemplate
+    Properties:
+      LaunchTemplateName: MyUbuntuServer
+      LaunchTemplateData:
+        ImageId: ami-08353a25e80beea3e
+        InstanceType: t4g.micro
+        BlockDeviceMappings:
+          - Ebs:
+              VolumeSize: 8
+              VolumeType: gp2
+              DeleteOnTermination: true
+              Encrypted: true
+            DeviceName: /dev/sda1
+        KeyName: myec2kp
