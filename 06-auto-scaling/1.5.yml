@@ -2,48 +2,36 @@ AWSTemplateFormatVersion: "2010-09-09"
 Description: ASG task using Cloudformation
 
 Resources:
-  DebianLT:
+  Debian:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-07d02ee1eeb0c996c
+      InstanceType: t2.medium
+      KeyName: myec2kp
+
+  myLaunchTemplate:
     Type: AWS::EC2::LaunchTemplate
     Properties:
-      LaunchTemplateName: MyDebianInstance
+      LaunchTemplateName: myLaunchTemplate
       LaunchTemplateData:
         ImageId: ami-07d02ee1eeb0c996c
-        InstanceType: t2.small
-        BlockDeviceMappings:
-          - Ebs:
-              VolumeSize: 8
-              VolumeType: gp2
-              DeleteOnTermination: true
-              Encrypted: true
-            DeviceName: /dev/sda
+        InstanceType: t2.medium
         KeyName: myec2kp
 
-  # myLaunchConfig:
-  #   Type: AWS::AutoScaling::LaunchConfiguration
-  #   Properties:
-  #     ImageId: ami-07d02ee1eeb0c996c
-  #     InstanceType: t2.small
-  #     KeyName: myec2kp
-  #     BlockDeviceMappings:
-  #     - DeviceName: /dev/sda
-  #       VirtualName: ephemeral0
-
-  
-  myASG:
+  LHmyASG:
     Type: AWS::AutoScaling::AutoScalingGroup
     Properties:
       AutoScalingGroupName: LHmyASG
       AvailabilityZones: 
-        Fn::GetAZs: us-east-1
+        - us-east-1a
+        - us-east-1b
+        - us-east-1c
       LaunchTemplate:
-        LaunchTemplateName: DebianLT
+        LaunchTemplateName: myLaunchTemplate
+        Version: "1"
       MaxSize: "1"
-      MinSize: "1"
+      MinSize: "0"
       DesiredCapacity: "1"
-      Tags:
-        - Key: Environment
-          Value: Production
-          PropagateAtLaunch: "True"
     UpdatePolicy:
       AutoScalingReplacingUpdate:
-        WillReplace: "True"  
+        WillReplace: "true"  

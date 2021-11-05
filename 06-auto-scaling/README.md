@@ -1,31 +1,33 @@
 # Topic 6: Auto Scaling
 ----------------------------------------------------------------------------------------------------
 *Using Launch Template and CLI to Create Debian Instance*
-aws cloudformation create-stack --stack-name asgtask --template-body file://1.1.yml --profile temp --region us-east-1
+aws cloudformation create-stack --stack-name asgtask --template-body file://1.1.yml --profile temp
 
 ----------------------------------------------------------------------------------------------------
 *Using CLI to create a ASG*
-aws autoscaling create-auto-scaling-group --auto-scaling-group-name asg-laeticia --instance-id i-0ba5f75451731fb01 --min-size 1 --max-size 1 --desired-capacity 1 --profile temp --region us-east-1
+aws autoscaling create-auto-scaling-group --auto-scaling-group-name asg-laeticia --instance-id i-0ba5f75451731fb01 --min-size 1 --max-size 1 --desired-capacity 1
 
 -----------------------------------------------------------------------------------------------------
 *Creating Launch Configuration and ASG*
 
-aws cloudformation create-stack --stack-name asgtask-1 --template-body file://1.2.yml --profile temp --region us-east-1
+aws cloudformation create-stack --stack-name asgtask-1 --template-body file://1.2.yml --profile temp
 
 ------------------------------------------------------------------------------------------------------
 *Changing instance size in Launch Configuration and Updating Stack*
 
 aws cloudformation update-stack --stack-name asgtask-1 --template-body file://1.3.yml --profile temp --region us-east-1
 
+aws cloudformation delete-stack --stack-name asgtask-1 --profile temp --region us-east-1
+
 -------------------------------------------------------------------------------------------------------
 *Changing the Update policy in the ASG*
 
-aws cloudformation update-stack --stack-name asgtask-1 --template-body file://1.4.yml --profile temp --region us-east-1
+aws cloudformation create-stack --stack-name asgtask-1 --template-body file://1.4.yml --profile temp --region us-east-1
 
 -------------------------------------------------------------------------------------------------------
 *Switched out Launch Configuration for Launch Template*
 
-aws cloudformation update-stack --stack-name asgtask-1 --template-body file://1.5.yml --profile temp --region us-east-1
+aws cloudformation create-stack --stack-name asgtask-1 --template-body file://1.5.yml --profile temp --region us-east-1
 
 -------------------------------------------------------------------------------------------------------
 *Tear down stacks*
@@ -36,18 +38,18 @@ aws cloudformation delete-stack --stack-name asgtask-1 --profile temp --region u
 --------------------------------------------------------------------------------------------------------
 *Creating Launch Configuration and ASG*
 
-aws cloudformation create-stack --stack-name asgtask-2 --template-body file://2.1.yml --profile temp --region us-east-1
+aws cloudformation create-stack --stack-name asgtask-1 --template-body file://2.1.yml --profile temp
 
 *List stack resources*
-aws cloudformation describe-stack-resources --stack-name asgtask-2 --profile temp --region us-east-1
+aws cloudformation describe-stack-resources --stack-name asgtask-1 --profile temp
 
 *Query an Instance's Id From the Stack's Resource Description*
-**aws cloudformation describe-stack-resources --stack-name asgtask2 --logical-resource-id orange --query StackResourceDetail.PhysicalResourceId --profile temp --region us-east-1**
+aws cloudformation describe-stack-resources --stack-name asgtask-1 --logical-resource-id Debian --query StackResourceDetail.PhysicalResourceId --profile temp --region us-east-1
 
 -----------------------------------------------------------------------------------------------------------
 *Changed the max and desired number of instances and Updated the Stack*
 
-aws cloudformation update-stack --stack-name asgtask-2 --template-body file://2.2.yml --profile temp --region us-east-1
+aws cloudformation update-stack --stack-name asgtask-1 --template-body file://2.2.yml --profile temp --region us-east-1
 
 ------------------------------------------------------------------------------------------------------------
 6.2.3
@@ -57,7 +59,7 @@ aws autoscaling describe-auto-scaling-instances --profile temp --region us-east-
 
 *Manually make an instance unhealthy*
 
-aws autoscaling set-instance-health --instance-ids <i-061c63c5eb45f0416> --health-status Unhealthy --profile temp --region us-east-1
+aws autoscaling set-instance-health --instance-ids <i-080a2bc5a72257833> --health-status Unhealthy --profile temp --region us-east-1
 
 ------------------------------------------------------------------------------------------------------------
 6.2.4

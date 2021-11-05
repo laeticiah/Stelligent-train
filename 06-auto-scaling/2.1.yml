@@ -8,11 +8,7 @@ Resources:
       ImageId: ami-07d02ee1eeb0c996c
       InstanceType: t2.medium
       KeyName: myec2kp
-      BlockDeviceMappings:
-      - DeviceName: /dev/sda
-        VirtualName: ephemeral0
 
-  
   myASG:
     Type: AWS::AutoScaling::AutoScalingGroup
     Properties:
