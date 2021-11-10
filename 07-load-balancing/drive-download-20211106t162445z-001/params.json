@@ -1,0 +1,18 @@
+[
+    {
+        "ParameterKey": "VPC",
+        "ParameterValue": "vpc-0221d9cb6ee5dbd65"
+    },
+    {
+        "ParameterKey": "PublicSubnet1",
+        "ParameterValue": "subnet-0f0346042605e0040"
+    },
+    {
+        "ParameterKey": "PublicSubnet2",
+        "ParameterValue": "subnet-0f1bfe264ee3a9466"
+    },
+    {
+        "ParameterKey": "PublicSubnet3",
+        "ParameterValue": "subnet-006bbbe334d2d0816"
+    }
+]
