@@ -130,7 +130,7 @@ Resources:
       Port: 443
       Protocol: "HTTPS"
       Certificates:
-        - CertificateArn: arn:aws:acm:us-east-1:324320755747:certificate/391142ae-65ed-4f47-afe8-db115766ce28
+        - CertificateArn: arn:aws:acm:us-east-1:324320755747:certificate/5c1fc7eb-5275-4180-8a7c-b8573bdf271b
       SslPolicy: ELBSecurityPolicy-FS-2018-06
       DefaultActions: 
         - Order: 1
@@ -144,7 +144,7 @@ Outputs:
             'Fn::Join':
                 - ''
                 - 
-                    - 'https://'
+                    - 'http://'
                     - 
                         'Fn::GetAtt':
                             - ApplicationLoadBalancer

@@ -13,7 +13,7 @@ $ aws acm import-certificate --certificate fileb://Certificate.pem --certificate
 
 *My output*
 {
-    "CertificateArn": "arn:aws:acm:us-east-1:324320755747:certificate/391142ae-65ed-4f47-afe8-db115766ce28"
+    "CertificateArn": "arn:aws:acm:us-east-1:324320755747:certificate/5c1fc7eb-5275-4180-8a7c-b8573bdf271b"
 }
 
 Used this ARN in `7.1.3.yml` line num `133`
