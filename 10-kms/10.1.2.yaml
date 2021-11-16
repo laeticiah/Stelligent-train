@@ -1,0 +1,34 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Resources:
+  mykmskey:
+    Type: 'AWS::KMS::Key'
+    Properties:
+      Description: Symmetric KMS key for my user
+      KeyPolicy:
+        Version: 2012-10-17
+        Id: default-key
+        Statement:
+          - Sid: Enable Key Administration
+            Effect: Allow
+            Principal:
+              AWS: 'arn:aws:iam::324320755747:user/laeticia.harper.labs'
+            Action: 'kms:*'
+            Resource: '*'
+          - Sid: Enable Use Key
+            Effect: Allow
+            Principal:
+              AWS: 'arn:aws:iam::324320755747:user/laeticia.harper.labs'
+            Action: 
+              - 'kms:DescribeKey'
+              - 'kms:Encrypt'
+              - 'kms:Decrypt'
+              - 'kms:ReEncrypt'
+              - 'kms:GenerateDataKey'
+              - 'kms:GenerateDataKeyWithoutPlaintext'
+            Resource: '*'
+  mykmsalias:
+    Type: 'AWS::KMS::Alias'
+    Properties:
+      AliasName: alias/LHalias
+      TargetKeyId: !Ref mykmskey
