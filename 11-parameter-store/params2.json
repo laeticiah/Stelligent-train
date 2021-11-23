@@ -1,0 +1,50 @@
+[
+    {
+        "ParameterKey": "checkParameterExists",
+        "ParameterValue": "/laeticia/stelligent-u/lab11/engineer/Laeticia/name"
+    },
+    {
+        "ParameterKey": "myName",
+        "ParameterValue": "/laeticia/stelligent-u/lab11/engineer/Laeticia/name"
+    },
+    {
+        "ParameterKey": "myTitle",
+        "ParameterValue": "/laeticia/stelligent-u/lab11/engineer/Laeticia/title"
+    },
+    {
+        "ParameterKey": "myAddress",
+        "ParameterValue": "/laeticia/stelligent-u/lab11/engineer/Laeticia/address"
+    },
+    {
+        "ParameterKey": "myTeam",
+        "ParameterValue": "/laeticia/stelligent-u/lab11/engineer/Laeticia/team"
+    },
+    {
+        "ParameterKey": "myTimezone",
+        "ParameterValue": "/laeticia/stelligent-u/lab11/engineer/Laeticia/timezone"
+    },
+    {
+        "ParameterKey": "myHomestate",
+        "ParameterValue": "/laeticia/stelligent-u/lab11/engineer/Laeticia/homestate"
+    },
+    {
+        "ParameterKey": "myStartdate",
+        "ParameterValue": "/laeticia/stelligent-u/lab11/engineer/Laeticia/start-date"
+    },
+    {
+        "ParameterKey": "VPC",
+        "ParameterValue": "vpc-0eda4c5321822a055"
+    },
+    {
+        "ParameterKey": "PublicSubnet1",
+        "ParameterValue": "subnet-0a141454b96df895e"
+    },
+    {
+        "ParameterKey": "PublicSubnet2",
+        "ParameterValue": "subnet-09427cd0d60e3be4a"
+    },
+    {
+        "ParameterKey": "PublicSubnet3",
+        "ParameterValue": "subnet-02ca7cb231c76c554"
+    }
+]

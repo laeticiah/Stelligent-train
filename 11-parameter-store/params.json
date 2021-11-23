@@ -1,0 +1,30 @@
+[
+    {
+        "ParameterKey": "myName",
+        "ParameterValue": "Laeticia"
+    },
+    {
+        "ParameterKey": "myTitle",
+        "ParameterValue": "Devops Engineer"
+    },
+    {
+        "ParameterKey": "myAddress",
+        "ParameterValue": "4717 Sycamore Street, Milpitas, California, 95035"
+    },
+    {
+        "ParameterKey": "myTeam",
+        "ParameterValue": "Devops"
+    },
+    {
+        "ParameterKey": "myTimezone",
+        "ParameterValue": "PST"
+    },
+    {
+        "ParameterKey": "myHomestate",
+        "ParameterValue": "CA"
+    },
+    {
+        "ParameterKey": "myStartdate",
+        "ParameterValue": "2021-11-20 10:20:30"
+    }
+]

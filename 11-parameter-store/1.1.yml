@@ -1,0 +1,75 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Parameters:
+  myName:
+    Type: String
+  myTitle:
+    Type: String
+  myAddress:
+    Type: String
+  myTeam:
+    Type: String
+  myTimezone:
+    Type: String
+  myHomestate:
+    Type: String
+  myStartdate:
+    Type: String
+
+Resources:
+  name:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: !Sub '/laeticia/stelligent-u/lab11/engineer/${myName}/name'
+      Type: String
+      Value: !Ref myName
+      Description: SSM Parameter for running date command.
+      AllowedPattern: "^[a-zA-Z\\s]+$"
+  title:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: !Sub '/laeticia/stelligent-u/lab11/engineer/${myName}/title'
+      Type: String
+      Value: !Ref myTitle
+      Description: SSM Parameter for running date command.
+      AllowedPattern: "[a-zA-Z\\s\\.]{1,30}"
+  address:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: !Sub '/laeticia/stelligent-u/lab11/engineer/${myName}/address'
+      Type: String
+      Value: !Ref myAddress
+      Description: SSM Parameter for running date command.
+      AllowedPattern: "^\\s*\\S+(?:\\s+\\S+)*"
+  team:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: !Sub '/laeticia/stelligent-u/lab11/engineer/${myName}/team'
+      Type: String
+      Value: !Ref myTeam
+      Description: SSM Parameter for running date command.
+      AllowedPattern: "[a-zA-Z\\s]{1,30}"
+  timezone:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: !Sub '/laeticia/stelligent-u/lab11/engineer/${myName}/timezone'
+      Type: String
+      Value: !Ref myTimezone
+      Description: SSM Parameter for running date command.
+      AllowedPattern: "[A-Z]{3}"
+  homestate:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: !Sub '/laeticia/stelligent-u/lab11/engineer/${myName}/homestate'
+      Type: String
+      Value: !Ref myHomestate
+      Description: SSM Parameter for running date command.
+      AllowedPattern: "[A-Z]{2}"
+  startdate:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: !Sub '/laeticia/stelligent-u/lab11/engineer/${myName}/start-date'
+      Type: String
+      Value: !Ref myStartdate
+      Description: SSM Parameter for running date command.
+      AllowedPattern: "^\\d{4}(-\\d{2}){2} (\\d{2}:){2}\\d{2}$"
