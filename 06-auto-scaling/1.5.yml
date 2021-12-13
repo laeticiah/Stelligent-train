@@ -2,13 +2,6 @@ AWSTemplateFormatVersion: "2010-09-09"
 Description: ASG task using Cloudformation
 
 Resources:
-  Debian:
-    Type: AWS::EC2::Instance
-    Properties:
-      ImageId: ami-07d02ee1eeb0c996c
-      InstanceType: t2.medium
-      KeyName: myec2kp
-
   myLaunchTemplate:
     Type: AWS::EC2::LaunchTemplate
     Properties:
@@ -16,18 +9,17 @@ Resources:
       LaunchTemplateData:
         ImageId: ami-07d02ee1eeb0c996c
         InstanceType: t2.medium
-        KeyName: myec2kp
+        KeyName: TestKey
 
-  LHmyASG:
+  myASG:
     Type: AWS::AutoScaling::AutoScalingGroup
     Properties:
-      AutoScalingGroupName: LHmyASG
       AvailabilityZones: 
         - us-east-1a
         - us-east-1b
         - us-east-1c
       LaunchTemplate:
-        LaunchTemplateName: myLaunchTemplate
+        LaunchTemplateId: !Ref myLaunchTemplate
         Version: "1"
       MaxSize: "1"
       MinSize: "0"

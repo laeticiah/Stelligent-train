@@ -2,27 +2,28 @@ AWSTemplateFormatVersion: "2010-09-09"
 Description: ASG task using Cloudformation
 
 Resources:
-  myLaunchConfig:
-    Type: AWS::AutoScaling::LaunchConfiguration
+  myLaunchTemplate:
+    Type: AWS::EC2::LaunchTemplate
     Properties:
-      ImageId: ami-07d02ee1eeb0c996c
-      InstanceType: t2.medium
-      KeyName: myec2kp
+      LaunchTemplateName: myLaunchTemplate
+      LaunchTemplateData:
+        ImageId: ami-07d02ee1eeb0c996c
+        InstanceType: t2.medium
+        KeyName: TestKey
 
   myASG:
     Type: AWS::AutoScaling::AutoScalingGroup
     Properties:
-      AutoScalingGroupName: LHmyASG
       AvailabilityZones: 
-        Fn::GetAZs: us-east-1
-      LaunchConfigurationName: !Ref myLaunchConfig
+        - us-east-1a
+        - us-east-1b
+        - us-east-1c
+      LaunchTemplate:
+        LaunchTemplateId: !Ref myLaunchTemplate
+        Version: "1"
       MaxSize: "1"
-      MinSize: "1"
+      MinSize: "0"
       DesiredCapacity: "1"
-      Tags:
-        - Key: Environment
-          Value: Production
-          PropagateAtLaunch: "True"
     UpdatePolicy:
       AutoScalingReplacingUpdate:
-        WillReplace: "True"  
+        WillReplace: "true"  
