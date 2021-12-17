@@ -1,0 +1,82 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+Resources:
+  myLaunchTemplate:
+    Type: AWS::EC2::LaunchTemplate
+    Properties: 
+      LaunchTemplateData: 
+        ImageId: ami-07d02ee1eeb0c996c
+        InstanceType: t2.micro
+        KeyName: myec2kp
+
+  myASG:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    Properties:
+      MinSize: 1
+      MaxSize: 3
+      DesiredCapacity: 1
+      AvailabilityZones:
+        - us-east-1a
+        - us-east-1b
+        - us-east-1c
+      LaunchTemplate:
+        LaunchTemplateId: !Ref myLaunchTemplate
+        Version: 1
+    UpdatePolicy:
+      AutoScalingReplacingUpdate:
+        WillReplace: 'true'
+
+  # ScaleUpPolicy:
+  #   Type: AWS::AutoScaling::ScalingPolicy
+  #   Properties:
+  #     PolicyType: TargetTrackingScaling
+  #     AutoScalingGroupName: 
+  #       Ref: "myASG"
+  #     TargetTrackingConfiguration:
+  #       PredefinedMetricSpecification:
+  #         PredefinedMetricType: ASGAverageCPUUtilization
+  #       TargetValue: 60
+  #       DisableScaleIn: True
+
+  # CPUAlarmHigh:
+  #   Type: 'AWS::CloudWatch::Alarm'
+  #   Properties:
+  #     AlarmDescription: Scale-up if CPU is greater than 60% for 2 minutes
+  #     MetricName: CPUUtilization
+  #     Namespace: AWS/EC2
+  #     Statistic: Average
+  #     Period: '120'
+  #     EvaluationPeriods: '1'
+  #     Threshold: '60'
+  #     AlarmActions:
+  #       - !Ref ScaleUpPolicy
+  #     Dimensions:
+  #       - Name: AutoScalingGroupName
+  #         Value: !Ref myASG
+  #     ComparisonOperator: GreaterThanThreshold
+
+  ScaleDownPolicy:
+    Type: AWS::AutoScaling::ScalingPolicy
+    Properties: 
+      AdjustmentType: "ExactCapacity"
+      PolicyType: "SimpleScaling"
+      AutoScalingGroupName: 
+        Ref: "myASG"
+      ScalingAdjustment: 1
+
+  CPUAlarmLow:
+    Type: 'AWS::CloudWatch::Alarm'
+    Properties:
+      AlarmDescription: Scale-down if CPU is less than 40% for 2 minutes
+      MetricName: CPUUtilization
+      Namespace: AWS/EC2
+      Statistic: Average
+      Period: '120'
+      EvaluationPeriods: '1'
+      Threshold: '40'
+      AlarmActions:
+        - !Ref ScaleDownPolicy
+      Dimensions:
+        - Name: AutoScalingGroupName
+          Value: !Ref myASG
+      ComparisonOperator: LessThanThreshold

@@ -7,12 +7,11 @@ Resources:
       ImageId: ami-07d02ee1eeb0c996c
       InstanceType: t2.micro
 
-  myLaunchTemplate:
-    Type: AWS::EC2::LaunchTemplate
-    Properties: 
-      LaunchTemplateData: 
-        ImageId: ami-07d02ee1eeb0c996c
-        InstanceType: t2.micro
+  myLaunchConfig: 
+    Type: AWS::AutoScaling::LaunchConfiguration
+    Properties:
+      ImageId: ami-07d02ee1eeb0c996c
+      InstanceType:  t2.medium
 
   myASG:
     Type: AWS::AutoScaling::AutoScalingGroup
@@ -24,9 +23,7 @@ Resources:
         - us-east-1a
         - us-east-1b
         - us-east-1c
-      LaunchTemplate:
-        LaunchTemplateId: !Ref myLaunchTemplate
-        Version: 1
+      LaunchConfigurationName: !Ref myLaunchConfig
     UpdatePolicy:
       AutoScalingReplacingUpdate:
         WillReplace: 'true'

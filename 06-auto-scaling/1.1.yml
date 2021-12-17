@@ -5,6 +5,5 @@ Resources:
   Debian:
     Type: AWS::EC2::Instance
     Properties:
-      LaunchTemplate:
-        LaunchTemplateName: DebianLT
-        Version: 1
+      ImageId: ami-07d02ee1eeb0c996c
+      InstanceType: t2.micro

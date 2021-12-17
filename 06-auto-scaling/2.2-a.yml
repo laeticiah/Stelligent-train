@@ -19,7 +19,7 @@ Resources:
     Properties:
       MinSize: 1
       MaxSize: 1
-      DesiredCapacity: 1
+      DesiredCapacity: 2
       AvailabilityZones:
         - us-east-1a
         - us-east-1b

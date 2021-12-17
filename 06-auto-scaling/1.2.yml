@@ -5,19 +5,15 @@ Resources:
   Debian:
     Type: AWS::EC2::Instance
     Properties:
-      LaunchTemplate:
-        LaunchTemplateName: DebianLT
-        Version: 1
+      ImageId: ami-07d02ee1eeb0c996c
+      InstanceType: t2.micro
 
   myLaunchConfig:
     Type: AWS::AutoScaling::LaunchConfiguration
     Properties:
       ImageId: ami-07d02ee1eeb0c996c
       InstanceType: t2.micro
-      KeyName: myec2kp
-      BlockDeviceMappings:
-      - DeviceName: /dev/xvda
-        VirtualName: ephemeral0
+      
 
   myASG:
     Type: AWS::AutoScaling::AutoScalingGroup
