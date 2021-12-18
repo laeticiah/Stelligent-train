@@ -7,3 +7,4 @@ Resources:
     Properties:
       ImageId: ami-07d02ee1eeb0c996c
       InstanceType: t2.micro
+      

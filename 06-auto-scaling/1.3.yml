@@ -8,6 +8,7 @@ Resources:
       ImageId: ami-07d02ee1eeb0c996c
       InstanceType: t2.small
 
+
   myLaunchConfig:
     Type: AWS::AutoScaling::LaunchConfiguration
     Properties:
@@ -26,6 +27,9 @@ Resources:
       MaxSize: "1"
       MinSize: "1"
       DesiredCapacity: "1"
+<<<<<<< HEAD
     UpdatePolicy:
       AutoscalingReplacingUpdate:
         WillReplace: 'true'
+=======
+>>>>>>> 114a3c39ff9903592735194b978264549d622443
